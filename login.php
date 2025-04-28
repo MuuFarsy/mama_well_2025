@@ -20,18 +20,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['name'] = $name;
             $_SESSION['role_id'] = $role_id;
 
+            // Log the login activity
+            $activity = "User logged in: " . $name;
+            $log_stmt = $conn->prepare("INSERT INTO system_activity (admin_id, action) VALUES (?, ?)");
+            $log_stmt->bind_param("is", $id, $activity);
+            $log_stmt->execute();
+
+            // Redirect based on role
             switch ($role_id) {
-                case 1:
+                case 1: // Pregnant Woman
+                    header("Location: patient_dashboard.php");
+                    break;
+                case 2: // Healthcare Provider
                     header("Location: provider_dashboard.php");
                     break;
-                case 2:
-                    header("Location: provider_dashboard.php");
-                    break;
-                case 3:
-                    header("Location: provider_dashboard.php");
+                case 3: // Admin
+                    header("Location: admin_dashboard.php");
                     break;
                 default:
-                    header("Location: provider_dashboard.php");
+                    header("Location: login.php");
             }
             exit();
         } else {
