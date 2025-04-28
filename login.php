@@ -22,16 +22,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             switch ($role_id) {
                 case 1:
-                    header("Location: pregnant_dashboard.php");
+                    header("Location: provider_dashboard.php");
                     break;
                 case 2:
                     header("Location: provider_dashboard.php");
                     break;
                 case 3:
-                    header("Location: admin_dashboard.php");
+                    header("Location: provider_dashboard.php");
                     break;
                 default:
-                    header("Location: dashboard.php");
+                    header("Location: provider_dashboard.php");
             }
             exit();
         } else {
